@@ -12,7 +12,7 @@ export default defineConfig(({ mode }) => ({
   },
   plugins: [
     react(),
-    mode === 'development' && componentTagger(),
+    ...(mode === 'development' ? [componentTagger()] : []),
   ].filter(Boolean),
   resolve: {
     alias: {
@@ -26,6 +26,7 @@ export default defineConfig(({ mode }) => ({
     include: ['pdfjs-dist'],
   },
   build: {
+    target: 'esnext', // Add this line to enable top-level await
     rollupOptions: {
       external: ['pdfjs-dist/build/pdf.worker.min.mjs'],
     },
